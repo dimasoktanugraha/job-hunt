@@ -13,9 +13,9 @@ interface NavbarProps {}
 const Navbar: FC<NavbarProps> = ({}) => {
   const router = useRouter();
 
-  const {data: session} = useSession()
+  const { data: session } = useSession();
 
-  console.log(session)
+  console.log(session);
 
   return (
     <header className="px-32 py-5 flex flex-row items-start justify-between">
@@ -46,14 +46,14 @@ const Navbar: FC<NavbarProps> = ({}) => {
 
       <div className="inline-flex items-center gap-4 h-8">
         {session ? (
-            <AuthMenu/>
+          <AuthMenu />
         ) : (
-            <>
-                <Button onClick={() => router.push("/signin")} variant="link">
-                    Login
-                </Button>
-                <Button>Sign up</Button>
-            </>   
+          <>
+            <Button onClick={() => router.push("/signin")} variant="link">
+              Login
+            </Button>
+            <Button>Sign up</Button>
+          </>
         )}
       </div>
     </header>

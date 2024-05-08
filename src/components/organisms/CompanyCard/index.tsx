@@ -12,7 +12,7 @@ const CompanyCard: FC<CompanyCardProps> = ({
   image,
   name,
   totalJobs,
-  id
+  id,
 }) => {
   const router = useRouter();
   return (
@@ -26,8 +26,10 @@ const CompanyCard: FC<CompanyCardProps> = ({
       </div>
       <div className="my-4">
         <div className="text-lg font-semibold mb-2">{name}</div>
-        <div className="line-clamp-3 text-sm text-muted-foreground" dangerouslySetInnerHTML={{__html: description}}>
-        </div>
+        <div
+          className="line-clamp-3 text-sm text-muted-foreground"
+          dangerouslySetInnerHTML={{ __html: description }}
+        ></div>
       </div>
       <div className="space-x-2">
         <Badge variant="outline">{industry}</Badge>

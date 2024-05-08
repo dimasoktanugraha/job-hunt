@@ -6,7 +6,6 @@ import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CATEGORIES_OPTION } from "@/constants";
 import useCategoryCompanyFilter from "@/hooks/useCategoryCompanyFilter";
 import useCompanies from "@/hooks/useCompanies";
 

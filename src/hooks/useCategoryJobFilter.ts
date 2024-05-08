@@ -18,7 +18,7 @@ const useCategoryJobFilter = () => {
         label: "Categories",
         items: categories,
       },
-    ]as filterFormType[];
+    ] as filterFormType[];
   }, [categories]);
 
   console.log(categories);

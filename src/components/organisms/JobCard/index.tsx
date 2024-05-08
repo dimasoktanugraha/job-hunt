@@ -18,7 +18,7 @@ const JobCard: FC<JobCardProps> = ({
   needs,
   type,
   skills,
-  id
+  id,
 }) => {
   const router = useRouter();
 

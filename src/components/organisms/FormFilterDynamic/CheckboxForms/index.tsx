@@ -1,20 +1,43 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import React, { FC } from "react";
 
 interface CheckboxFormProps {
-    formFilter: any,
-    items: any[],
-    name: string,
-    label: string 
+  formFilter: any;
+  items: any[];
+  name: string;
+  label: string;
 }
 
-const CheckboxForm: FC<CheckboxFormProps> = ({ formFilter, items, name, label }) => {
-  return ( 
-    <Accordion defaultValue={name} type="single" className="border-none mt-0" collapsible>
+const CheckboxForm: FC<CheckboxFormProps> = ({
+  formFilter,
+  items,
+  name,
+  label,
+}) => {
+  return (
+    <Accordion
+      defaultValue={name}
+      type="single"
+      className="border-none mt-0"
+      collapsible
+    >
       <AccordionItem value={name}>
-        <AccordionTrigger className="font-semibold first:pt-0">{label}</AccordionTrigger>
+        <AccordionTrigger className="font-semibold first:pt-0">
+          {label}
+        </AccordionTrigger>
         <AccordionContent>
           <FormField
             control={formFilter.control}

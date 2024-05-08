@@ -18,7 +18,7 @@ const useCategoryCompanyFilter = () => {
         label: "Industry",
         items: categories,
       },
-    ]as filterFormType[];
+    ] as filterFormType[];
   }, [categories]);
 
   console.log(categories);

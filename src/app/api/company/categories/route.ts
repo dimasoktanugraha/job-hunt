@@ -1,8 +1,8 @@
-import prisma from '../../../../../lib/prisma'
-import { NextResponse } from 'next/server'
+import prisma from "../../../../../lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
-  const categories = await prisma.industry.findMany({})
+  const categories = await prisma.industry.findMany({});
 
-  return NextResponse.json(categories)
+  return NextResponse.json(categories);
 }

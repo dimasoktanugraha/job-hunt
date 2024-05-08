@@ -3,8 +3,10 @@ import { twMerge } from "tailwind-merge";
 import dayjs from "dayjs";
 import bcrypt from "bcryptjs";
 import { JobType, categoryJobType, companyType, optionType } from "@/types";
-import { supabaseClient, supabasePublicUrl } from "./supabase";
-import { CompanyTeam } from "@prisma/client";
+import { supabasePublicUrl } from "./supabase";
+import { NextAuthOptions } from "next-auth";
+import CredentialProvider from "next-auth/providers/credentials";
+import prisma from "../../lib/prisma";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -36,7 +38,7 @@ export async function fetcher<JSON = any>(
 
 export const dateFormat = (date: any, format: string = "DD MMM YYYY") => {
   // return moment(date).format(format);
-  return dayjs(date).format(format)
+  return dayjs(date).format(format);
 };
 
 export const parseCategories = (data: any, isLoading: boolean, error: any) => {
@@ -53,17 +55,17 @@ export const parseCategories = (data: any, isLoading: boolean, error: any) => {
   return [];
 };
 
-export const parseJobs = async(data: any, isLoading: boolean, error: any) => {
+export const parseJobs = async (data: any, isLoading: boolean, error: any) => {
   if (!isLoading && !error && data) {
     return await Promise.all(
       data.map(async (item: any) => {
-        const imageName = item.Company?.CompanyOverview[0].image
-        let imageUrl
+        const imageName = item.Company?.CompanyOverview[0].image;
+        let imageUrl;
 
-        if(imageName){
-          imageUrl = await supabasePublicUrl(imageName, 'company')
-        }else{
-          imageUrl = "/images/company2.png"
+        if (imageName) {
+          imageUrl = await supabasePublicUrl(imageName, "company");
+        } else {
+          imageUrl = "/images/company2.png";
         }
 
         const job: JobType = {
@@ -77,30 +79,34 @@ export const parseJobs = async(data: any, isLoading: boolean, error: any) => {
           location: item.Company?.CompanyOverview[0].location,
           needs: item.needs,
           type: item.CategoryJob.name,
-          skills: item.requiredSkills
+          skills: item.requiredSkills,
         };
         return job;
       })
-    )
+    );
   }
 
   return [];
 };
 
-export const  parseCompanies = async(data: any, isLoading: boolean, error: any) => {
+export const parseCompanies = async (
+  data: any,
+  isLoading: boolean,
+  error: any
+) => {
   if (!isLoading && !error && data) {
     return await Promise.all(
       data.map(async (item: any) => {
-        const imageName = item.CompanyOverview[0].image
-        let imageUrl
+        const imageName = item.CompanyOverview[0].image;
+        let imageUrl;
 
-        if(imageName){
-          imageUrl = await supabasePublicUrl(imageName, 'company')
-        }else{
-          imageUrl = "/images/company2.png"
+        if (imageName) {
+          imageUrl = await supabasePublicUrl(imageName, "company");
+        } else {
+          imageUrl = "/images/company2.png";
         }
 
-        const companyDetail = item.CompanyOverview[0]
+        const companyDetail = item.CompanyOverview[0];
 
         const company: companyType = {
           id: item.id,
@@ -115,18 +121,22 @@ export const  parseCompanies = async(data: any, isLoading: boolean, error: any) 
           website: companyDetail?.website,
           socmed: item.CompanySocialMedia[0],
           teams: item.CompanyTeam,
-          totalJobs: item._count.Job
-
+          totalJobs: item._count.Job,
         };
         return company;
       })
-    )
+    );
   }
 
   return [];
 };
 
-export const parseCategoryToOptions = (data: any, isLoading: boolean, error: any, isIndustry?: boolean) => {
+export const parseCategoryToOptions = (
+  data: any,
+  isLoading: boolean,
+  error: any,
+  isIndustry?: boolean
+) => {
   if (!isLoading && !error && data) {
     return data.map((item: any) => {
       return {
@@ -137,4 +147,63 @@ export const parseCategoryToOptions = (data: any, isLoading: boolean, error: any
   }
 
   return [];
-}
+};
+
+export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET_KEY,
+  providers: [
+    CredentialProvider({
+      name: "Credentials",
+      credentials: {
+        email: {
+          label: "email",
+          type: "email",
+        },
+        password: {
+          label: "password",
+          type: "password",
+        },
+      },
+      async authorize(credentials, req) {
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials?.email,
+          },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        const isMatch = await comparePassword(
+          credentials?.password!!,
+          user.password
+        );
+
+        if (isMatch) {
+          return user;
+        }
+
+        return null;
+      },
+    }),
+  ],
+  pages: {
+    signIn: "/signin",
+    newUser: "/signup",
+    error: "auth/error",
+  },
+  callbacks: {
+    jwt({ token, account, user }) {
+      if (account) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.user.id = token.id;
+
+      return session;
+    },
+  },
+};

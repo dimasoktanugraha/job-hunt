@@ -42,16 +42,16 @@ const UploadField: FC<UploadFieldProps> = ({ form }) => {
           name="resume"
           render={({ field }) => (
             <FormItem>
-              <FormMessage className="mt-2"/>
+              <FormMessage className="mt-2" />
             </FormItem>
           )}
         />
         <input
-            ref={inputRef}
-            type="file"
-            className="hidden"
-            accept="application/pdf"
-            onChange={handleFileChange}
+          ref={inputRef}
+          type="file"
+          className="hidden"
+          accept="application/pdf"
+          onChange={handleFileChange}
         />
       </div>
     </div>

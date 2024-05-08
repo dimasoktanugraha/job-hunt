@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { formSignInSchema } from "@/lib/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,23 +28,23 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
     resolver: zodResolver(formSignInSchema),
   });
 
-  const { toast } = useToast()
-  const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
 
   const onSubmit = async (val: z.infer<typeof formSignInSchema>) => {
     const authenticated = await signIn("credentials", {
       ...val,
-      redirect: false
-    })
+      redirect: false,
+    });
 
-    if(authenticated?.error){
+    if (authenticated?.error) {
       toast({
-        title: 'Error',
-        description: 'Email or Password maybe wrong'
-      })
+        title: "Error",
+        description: "Email or Password maybe wrong",
+      });
     }
 
-    router.push('/')
+    router.push("/");
   };
 
   return (
@@ -54,10 +61,7 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter your email"
-                    {...field}
-                  />
+                  <Input placeholder="Enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -80,10 +84,12 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">Sign In</Button>
+          <Button type="submit" className="w-full">
+            Sign In
+          </Button>
           <div className="text-gray-500 text-sm mt-6">
-            Don't have an account {" "}
-            <Link href='/signup' className="text-primary">
+            Don`t have an account{" "}
+            <Link href="/signup" className="text-primary">
               Sign Up
             </Link>
           </div>

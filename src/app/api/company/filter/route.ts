@@ -18,10 +18,10 @@ export async function GET(request: Request) {
           CompanyOverview: {
             every: {
               industry: {
-                in: filterCategory
-              }
-            }
-          }
+                in: filterCategory,
+              },
+            },
+          },
         }
       : {};
 
@@ -32,8 +32,8 @@ export async function GET(request: Request) {
       CompanyTeam: true,
       CompanySocialMedia: true,
       _count: {
-        select: {Job: true}
-      }
+        select: { Job: true },
+      },
     },
   });
 

@@ -1,22 +1,18 @@
 import FormModalApply from "@/components/organisms/FormModalApply";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import Link from "next/link";
 import React, { FC } from "react";
 import { BiCategory } from "react-icons/bi";
-import { HiOutlineArrowRight } from "react-icons/hi";
 import prisma from "../../../../../../lib/prisma";
 import { supabasePublicUrl } from "@/lib/supabase";
-import { dateFormat } from "@/lib/utils";
+import { authOptions, dateFormat } from "@/lib/utils";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function getDetailJob(id: string) {
-
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   const data = await prisma.job.findFirst({
     where: {
@@ -46,11 +42,11 @@ async function getDetailJob(id: string) {
   const isApply = await prisma.applicant.count({
     where: {
       userId: session?.user.id,
-      jobId: id
-    }
-  })
+      jobId: id,
+    },
+  });
 
-  const benefits: any = data?.benefits
+  const benefits: any = data?.benefits;
 
   return { ...data, image: imageUrl, isApply, benefits };
 }
@@ -97,7 +93,14 @@ const DetailJobPage = async ({ params }: { params: { id: string } }) => {
               </div>
             </div>
           </div>
-          <FormModalApply image={data.image} roles={data.roles!!} location={data.Company?.CompanyOverview[0].location!!} jobType={data.jobType!!} id={data.id!!} isApply={data.isApply} />
+          <FormModalApply
+            image={data.image}
+            roles={data.roles!!}
+            location={data.Company?.CompanyOverview[0].location!!}
+            jobType={data.jobType!!}
+            id={data.id!!}
+            isApply={data.isApply}
+          />
         </div>
       </div>
 
@@ -154,9 +157,7 @@ const DetailJobPage = async ({ params }: { params: { id: string } }) => {
             <div className="mt-6 space-y-4">
               <div className="flex flex-row justify-between">
                 <div className="text-gray-500">Apply Before</div>
-                <div className="font-semibold">
-                  {dateFormat(data?.dueDate)}
-                </div>
+                <div className="font-semibold">{dateFormat(data?.dueDate)}</div>
               </div>
               <div className="flex flex-row justify-between">
                 <div className="text-gray-500">Job Posted On</div>
@@ -216,7 +217,9 @@ const DetailJobPage = async ({ params }: { params: { id: string } }) => {
             <div key={i}>
               <BiCategory className="w-12 h-12 text-primary" />
               <div className="font-semibold text-xl mt-6">{item.benefit}</div>
-              <div className="mt-3 text-sm text-gray-500">{item.description}</div>
+              <div className="mt-3 text-sm text-gray-500">
+                {item.description}
+              </div>
             </div>
           ))}
         </div>

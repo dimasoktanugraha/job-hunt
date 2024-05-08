@@ -23,11 +23,9 @@ export default function RootLayout({
       <body className={`${epilogue.className} relative overflow-x-hidden`}>
         <AuthProvider>
           <Navbar />
-          <main>
-            {children}
-          </main>
+          <main>{children}</main>
           <Footer />
-          <Toaster/>
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

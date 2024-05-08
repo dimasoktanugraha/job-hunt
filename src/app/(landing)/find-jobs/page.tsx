@@ -19,16 +19,16 @@ const FindJobsPage: FC<FindJobsPageProps> = ({}) => {
     },
   });
 
-  const [categories, setCategories] = useState<string[]>([])
+  const [categories, setCategories] = useState<string[]>([]);
   const { filters } = useCategoryJobFilter();
   const { jobs, isLoading, mutate } = useJob(categories);
-  
+
   useEffect(() => {
-    mutate()
-  }, [categories])
+    mutate();
+  }, [categories]);
 
   const onSubmitFormFilter = async (val: z.infer<typeof formFilterSchema>) => {
-    setCategories(val.categories)
+    setCategories(val.categories);
   };
 
   return (

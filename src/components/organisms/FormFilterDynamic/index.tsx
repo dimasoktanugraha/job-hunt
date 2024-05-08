@@ -23,8 +23,6 @@ const FormFilterDynamic: FC<FormFilterDynamicProps> = ({
   onSubmitFilter,
   filterForms,
 }) => {
-
-
   return (
     <Form {...formFilter}>
       <form
@@ -32,11 +30,19 @@ const FormFilterDynamic: FC<FormFilterDynamicProps> = ({
         className="space-y-8"
       >
         {filterForms?.map((item: filterFormType, i: number) => (
-            <CheckboxForm key={i} formFilter={formFilter} items={item.items} name={item.name} label={item.label} />
+          <CheckboxForm
+            key={i}
+            formFilter={formFilter}
+            items={item.items}
+            name={item.name}
+            label={item.label}
+          />
         ))}
 
         <Button className="mt-5 w-full">Apply Filter</Button>
-        <Button variant='outline' className="mt-2 w-full">Reset Filter</Button>
+        <Button variant="outline" className="mt-2 w-full">
+          Reset Filter
+        </Button>
       </form>
     </Form>
   );

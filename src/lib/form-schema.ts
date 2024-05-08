@@ -11,7 +11,7 @@ export const formFilterCompanySchema = z.object({
 
 export const formApplySchema = z.object({
   resume: z.any().refine((file: any) => file?.name, "Please upload resume"),
-  fullname: z 
+  fullname: z
     .string({ required_error: "Fullname is required" })
     .min(5, { message: "Full name have min 5 characters" }),
   email: z
@@ -25,12 +25,16 @@ export const formApplySchema = z.object({
 });
 
 export const formSignInSchema = z.object({
-  email: z.string({required_error: "Email is required"}),
-  password: z.string({required_error: "Password is required"}),
+  email: z.string({ required_error: "Email is required" }),
+  password: z.string({ required_error: "Password is required" }),
 });
 
 export const formSignUpSchema = z.object({
-  email: z.string({required_error: "Email is required"}).email({message: 'Email is not valid'}),
-  password: z.string({required_error: "Password is required"}),
-  name: z.string({required_error: "Name is required"}).min(3, {message: 'Name should have min 3 characters'}),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email({ message: "Email is not valid" }),
+  password: z.string({ required_error: "Password is required" }),
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(3, { message: "Name should have min 3 characters" }),
 });

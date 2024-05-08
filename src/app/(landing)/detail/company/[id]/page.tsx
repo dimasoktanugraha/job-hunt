@@ -19,7 +19,6 @@ import {
 import prisma from "../../../../../../lib/prisma";
 import { getServerSession } from "next-auth/next";
 import { supabasePublicUrl } from "@/lib/supabase";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { dateFormat } from "@/lib/utils";
 import { CompanyTeam } from "@prisma/client";
 

@@ -1,13 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC } from "react";
 
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = ({}) => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default Navbar
+export default Navbar;
